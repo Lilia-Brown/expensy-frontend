@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+import AuthForm from './components/AuthForm';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    const userId = localStorage.getItem('userId');
+    if (token && userId) {
+      setIsAuthenticated(true);
+      setCurrentUserId(userId);
+    }
+  }, []);
+
+  const handleLoginSuccess = (token: string, userId: string) => {
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('userId', userId);
+    setIsAuthenticated(true);
+    setCurrentUserId(userId);
+
+    alert('Login successful!'); // TODO: For testing
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    setIsAuthenticated(false);
+    setCurrentUserId(null);
+    alert('Logged out!');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <h1>Expense Tracker</h1>
+
+      {isAuthenticated ? (
+        <div>
+          <p>Welcome back, User ID: {currentUserId || 'N/A'}!</p>
+          <button onClick={handleLogout} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+            Logout
+          </button>
+          {/* TODO: Add expenses */}
+          <h2 style={{ marginTop: '30px' }}>Your Expenses (Coming Soon!)</h2>
+          <p>You are logged in. We'll build the expense list here next!</p>
+        </div>
+      ) : (
+        <AuthForm onLoginSuccess={handleLoginSuccess} />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
