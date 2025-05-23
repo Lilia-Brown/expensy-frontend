@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import AuthForm from './components/AuthForm';
+import ExpenseList from './components/ExpenseList';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -42,9 +43,9 @@ function App() {
           <button onClick={handleLogout} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
             Logout
           </button>
-          {/* TODO: Add expenses */}
-          <h2 style={{ marginTop: '30px' }}>Your Expenses (Coming Soon!)</h2>
-          <p>You are logged in. We'll build the expense list here next!</p>
+
+          <ExpenseList />
+
         </div>
       ) : (
         <AuthForm onLoginSuccess={handleLoginSuccess} />
