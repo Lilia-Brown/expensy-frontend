@@ -1,54 +1,66 @@
-# React + TypeScript + Vite
+# Expensy Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WIP as of 05/23/25
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework:** React 19
+- **Build Tool:** Vite
+- **Language:** TypeScript
+- **Linting:** ESLint
 
-## Expanding the ESLint configuration
+## Description
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This is the frontend for **Expensy**, a budgeting application that helps users track expenses across multiple cities. Users can log individual expenses, categorize them, and set monthly budget limits. The app monitors spending in real time and alerts users when they approach or exceed their budgets, helping them stay financially on track.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Requirements
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Node.js (>= 18 recommended)
+- npm or yarn
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Getting Started
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/Lilia-Brown/expensy-frontend.git
+   cd expensy-frontend
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Start the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   The app will be available at [http://localhost:5173](http://localhost:5173) by default.
+
+4. **Lint the code:**
+
+   ```bash
+   npm run lint
+   ```
+
+5. **Build for production:**
+
+   ```bash
+   npm run build
+   ```
+
+6. **Preview production build locally:**
+
+   ```bash
+   npm run preview
+   ```
+
+## Authors
+
+[Lily Brown](https://tinyurl.com/lilia-brown): https://www.linkedin.com/in/lilia-brown/
