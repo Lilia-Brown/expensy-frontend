@@ -50,7 +50,6 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
       }
 
       try {
-        console.log('authToken:', authToken)
         const budgetResponse = await fetch(`http://localhost:3000/budgets`, {
           headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -106,7 +105,13 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
     if (!budget) return { spent: 0, remaining: 0, percentage: 0 };
 
     const totalBudget = budget.budgetAmount;
-    const spentAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const spentAmount = expenses.reduce((sum, expense) => {
+      if (typeof expense.amount !== 'number') {
+        console.warn('BudgetCard: Non-numeric expense amount found:', expense);
+        return sum;
+      }
+      return sum + expense.amount;
+    }, 0);
     const remainingAmount = totalBudget - spentAmount;
     const percentageSpent = totalBudget > 0 ? (spentAmount / totalBudget) * 100 : 0;
 
@@ -139,25 +144,30 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
   return (
     <div className="budget-card">
       <div className="budget-card-header">
-        <h3>Current City Budget: {budget.city}</h3>
+        <h3>Current City Budget</h3>
+        <span className="options-icon">...</span>
       </div>
       
+      <div className="budget-city">
+        {budget.city}
+      </div>
+
       <div className="budget-details">
         <div className="budget-detail-item">
-          <span className="budget-label">Budget Period:</span>
+          <span className="budget-label">Budget Period</span>
           <span className="budget-value">{budgetPeriod}</span>
         </div>
         <div className="budget-detail-item">
-          <span className="budget-label">Total Budget:</span>
-          <span className="budget-value">{budget.budgetAmount.toFixed(2)} {budget.currency}</span>
+          <span className="budget-label">Total Budget</span>
+          <span className="total-budget-value">{budget.budgetAmount.toFixed(2)} {budget.currency}</span>
         </div>
         <div className="budget-detail-item">
-          <span className="budget-label">Spent:</span>
+          <span className="budget-label">Spent</span>
           <span className="spent-amount">{spent.toFixed(2)} {budget.currency}</span>
         </div>
         <div className="budget-detail-item">
-          <span className="budget-label">Remaining:</span>
-          <span className="remaining-amount">{remaining.toFixed(2)} {budget.currency}</span>
+          <span className="budget-label">Remaining</span>
+          <span className={`remaining-amount ${progressBarClass}`} >{remaining.toFixed(2)} {budget.currency}</span>
         </div>
       </div>
 
@@ -166,17 +176,15 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
           className={`progress-bar-fill ${progressBarClass}`} 
           style={{ width: `${Math.min(percentage, 100)}%` }}
         >
-          {percentage.toFixed(1)}%
         </div>
+      </div>
+      <div className="progress-percentage">
+        {percentage.toFixed(1)}%
       </div>
 
       <div className="budget-alerts">
         Budget Alerts: Your Budget Alerts (Coming Soon!)
       </div>
-
-      <button className="change-city-button" onClick={() => alert('Change City Feature Coming Soon!')}>
-        Change City
-      </button>
     </div>
   );
 };

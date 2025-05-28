@@ -1,85 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 .budget-card {
   background-color: white;
   padding: 25px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   gap: 15px;
-  min-height: 200px;
-  transition: transform 0.2s ease;
+  min-height: 220px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
 .budget-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .budget-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .budget-card-header h3 {
   margin: 0;
-  color: #333;
-  font-size: 1.5em;
+  color: #212529;
+  font-size: 1.6em;
+  font-weight: 600;
+}
+
+.options-icon {
+  font-size: 1.6em;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.budget-city {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #343a40;
+  margin-top: -5px;
+  margin-bottom: 10px;
 }
 
 .budget-details {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  margin-bottom: 10px;
 }
 
 .budget-detail-item {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   font-size: 1em;
-  color: #555;
+  font-weight: 400;
+  color: #6c757d;
 }
 
 .budget-label {
-  font-weight: bold;
-  color: #333;
+  flex-shrink: 0;
+  padding-right: 15px;
 }
 
-.budget-value {
-  color: #007bff;
-}
-
-.spent-amount {
-  color: #dc3545;
-  font-weight: bold;
-}
-
+.budget-value,
+.total-budget-value,
+.spent-amount,
 .remaining-amount {
+  text-align: right;
+  flex-grow: 1;
+}
+
+.remaining-amount.green {
   color: #28a745;
-  font-weight: bold;
+}
+
+.remaining-amount.orange {
+  color: #ffc107;
+}
+
+.remaining-amount.red {
+  color: #dc3545;
+}
+
+
+.progress-bar-label {
+  font-size: 0.9em;
+  color: #6c757d;
+  margin-bottom: 8px;
+  font-weight: 400;
 }
 
 .progress-bar-container {
   width: 100%;
   background-color: #e9ecef;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  height: 20px;
-  margin-top: 10px;
+  height: 18px;
+  margin-bottom: 8px;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
   transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 8px;
-  color: white;
-  font-size: 0.85em;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .progress-bar-fill.green {
@@ -94,33 +125,26 @@
   background-color: #dc3545;
 }
 
-.budget-alerts {
-  margin-top: 15px;
+.progress-percentage {
+  text-align: right;
   font-size: 0.9em;
   color: #6c757d;
+  margin-top: -5px;
 }
 
-.change-city-button {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
-  cursor: pointer;
+
+.budget-alerts {
+  margin-top: 10px;
   font-size: 0.9em;
-  transition: background-color 0.2s ease;
-  align-self: flex-start;
-  margin-top: auto;
-}
-
-.change-city-button:hover {
-  background-color: #5a6268;
+  color: #6c757d;
+  font-style: normal;
 }
 
 .loading-text, .error-text {
   text-align: center;
   color: #6c757d;
   font-style: italic;
+  padding: 30px;
 }
 
 .error-text {
