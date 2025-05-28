@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import AddExpenseForm from '../components/AddExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import BudgetCard from '../components/BudgetCard';
-import './DashboardPage.css';
+import '../styles/pages/DashboardPage.css';
 
 interface DashboardPageProps {
   currentUserId: string | null;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './BudgetCard.css';
+import '../styles/components/BudgetCard.css';
 
 interface Budget {
   _id: string;

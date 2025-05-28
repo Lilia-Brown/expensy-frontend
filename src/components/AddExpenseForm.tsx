@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './AddExpenseForm.css';
+import '../styles/components/AddExpenseForm.css';
 
 interface Category {
   id: string;

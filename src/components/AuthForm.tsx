@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AuthForm.css';
+import '../styles/components/AuthForm.css';
 
 interface LoginResponse {
   token: string;

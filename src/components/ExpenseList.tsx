@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ExpenseList.css';
+import '../styles/components/ExpenseList.css';
 
 interface Category {
   id: string;
