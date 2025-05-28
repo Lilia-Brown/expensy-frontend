@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import AddExpenseForm from '../components/AddExpenseForm';
-import ExpenseList from '../components/ExpenseList';
+// import AddExpenseForm from '../components/AddExpenseForm';
+// import ExpenseList from '../components/ExpenseList';
 import BudgetCard from '../components/BudgetCard';
 import '../styles/pages/DashboardPage.css';
 
@@ -27,22 +27,19 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
       <Header username={username} onLogout={onLogout} /> 
 
       <main className="main-content">
-        <h2>Your Financial Overview</h2>
-        
-        <p>Welcome back, User ID: {currentUserId || 'N/A'}!</p>
-        
         <div className="content-grid">
           <BudgetCard currentUserId={currentUserId} />
 
-          <div className="placeholder-card">
+          {/* TODO: Clean up Dashboard and Components */}
+          {/* <div className="placeholder-card">
             <h3>Add New Expense</h3>
             <AddExpenseForm />
-          </div>
+          </div> */}
 
-          <div className="placeholder-full-width">
+          {/* <div className="placeholder-full-width">
             <h3>Recent Expenses</h3>
             <ExpenseList />
-          </div>
+          </div> */}
         </div>
       </main>
     </div>

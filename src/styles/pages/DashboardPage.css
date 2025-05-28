@@ -22,7 +22,8 @@
 }
 
 .content-grid {
-  display: grid;
+  display: flex;
+  justify-content: center;
   grid-template-columns: 1fr;
   gap: 20px;
   margin-top: 20px;
