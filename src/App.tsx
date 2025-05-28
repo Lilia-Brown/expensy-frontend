@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+
 import AuthForm from './components/AuthForm';
-import ExpenseList from './components/ExpenseList';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -23,6 +27,7 @@ function App() {
     setCurrentUserId(userId);
 
     alert('Login successful!'); // TODO: For testing
+    navigate('/dashboard');
   };
 
   const handleLogout = () => {
@@ -31,27 +36,68 @@ function App() {
     setIsAuthenticated(false);
     setCurrentUserId(null);
     alert('Logged out!');
+    navigate('/auth');
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+    <div className="app-container">
       <h1>Expense Tracker</h1>
 
-      {isAuthenticated ? (
-        <div>
-          <p>Welcome back, User ID: {currentUserId || 'N/A'}!</p>
-          <button onClick={handleLogout} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Logout
-          </button>
+      <Routes>
+        <Route
+          path="/auth"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <AuthForm onLoginSuccess={handleLoginSuccess} />
+            )
+          }
+        />
 
-          <ExpenseList />
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? (
+              <DashboardPage currentUserId={currentUserId} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/auth" replace />
+            )
+          }
+        />
 
-        </div>
-      ) : (
-        <AuthForm onLoginSuccess={handleLoginSuccess} />
-      )}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Navigate to="/auth" replace />
+            )
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Navigate to="/auth" replace />
+            )
+          }
+        />
+      </Routes>
     </div>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;
