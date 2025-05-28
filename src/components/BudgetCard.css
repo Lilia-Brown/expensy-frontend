@@ -1,0 +1,129 @@
+.budget-card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-height: 200px;
+  transition: transform 0.2s ease;
+}
+
+.budget-card:hover {
+  transform: translateY(-3px);
+}
+
+.budget-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.budget-card-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.budget-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.budget-detail-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  color: #555;
+}
+
+.budget-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.budget-value {
+  color: #007bff;
+}
+
+.spent-amount {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.remaining-amount {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 20px;
+  margin-top: 10px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  color: white;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.progress-bar-fill.green {
+  background-color: #28a745;
+}
+
+.progress-bar-fill.orange {
+  background-color: #ffc107;
+}
+
+.progress-bar-fill.red {
+  background-color: #dc3545;
+}
+
+.budget-alerts {
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: #6c757d;
+}
+
+.change-city-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.change-city-button:hover {
+  background-color: #5a6268;
+}
+
+.loading-text, .error-text {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.error-text {
+  color: #dc3545;
+  font-weight: bold;
+}

@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import AuthForm from './components/AuthForm';
-import DashboardPage from './pages/DashboardPage';
+import DashboardPage from './pages/DashboardPage.tsx';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
