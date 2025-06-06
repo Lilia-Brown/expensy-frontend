@@ -3,11 +3,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background-color: #007bff; /* A nice blue for the header */
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  z-index: 10;
 }
 
 .logo-container {
@@ -17,32 +19,49 @@
 
 .app-name {
   margin: 0;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #212529;
 }
 
-.user-info {
+.user-profile {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
-.welcome-text {
-  margin-right: 20px;
-  font-size: 16px;
+.greeting-text {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 0.9em;
+  color: #6c757d;
+  line-height: 1.2;
 }
 
-.logout-button {
-  background-color: #dc3545; /* Red for danger/logout */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
+.personalized-text {
+  font-weight: 500;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e9ecef;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.logout-button:hover {
-  background-color: #c82333;
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header,
+.header * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
