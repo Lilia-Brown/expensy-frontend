@@ -15,8 +15,9 @@ body {
 }
 
 .app-container {
-  padding: 20px;
+  text-align: center;
   max-width: 1200px;
+  padding: 20px;
   margin: 0 auto;
   box-sizing: border-box;
   min-height: 100vh;
@@ -27,7 +28,6 @@ body {
 .app-container h1 {
   text-align: center;
   color: #333;
-  margin-bottom: 30px;
 }
 
 .dashboard-layout {

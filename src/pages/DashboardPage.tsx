@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 // import AddExpenseForm from '../components/AddExpenseForm';
-// import ExpenseList from '../components/ExpenseList';
+import ExpenseList from '../components/ExpenseList';
 import BudgetCard from '../components/BudgetCard';
 import '../styles/pages/DashboardPage.css';
 
@@ -77,6 +77,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
       <main className="main-content">
         <div className="content-grid">
           <BudgetCard currentUserId={currentUserId} />
+          <ExpenseList />
 
           {/* TODO: Clean up Dashboard and Components */}
           {/* <div className="placeholder-card">
@@ -84,10 +85,6 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
             <AddExpenseForm />
           </div> */}
 
-          {/* <div className="placeholder-full-width">
-            <h3>Recent Expenses</h3>
-            <ExpenseList />
-          </div> */}
         </div>
       </main>
     </div>

@@ -88,21 +88,34 @@ const ExpenseList: React.FC = () => {
 
   return (
     <div className="expense-list-container">
-      <h2>Your Expenses</h2>
+      <div className="expense-list-header">
+        <h3>Recent Expenses</h3>
+        <div className="sort-filter-section">
+          {/* TODO: Add sort and filtering */}
+        </div>
+      </div>
+
       {expenses.length === 0 ? (
         <p className="no-expenses-message">No expenses found for this user. Time to add some!</p>
       ) : (
-        <ul className="expenses-ul">
-          {expenses.map((expense) => (
-            <li key={expense.id} className="expense-item">
-              <p><strong>Description:</strong> {expense.description || 'N/A'}</p>
-              <p><strong>Amount:</strong> ${expense.amount.toFixed(2)} {expense.currency}</p>
-              <p><strong>Date:</strong> {new Date(expense.date).toLocaleDateString()}</p>
-              <p><strong>City:</strong> {expense.city}</p>
-              <p><strong>Category:</strong> {expense.category?.name || 'N/A'}</p>
-            </li>
-          ))}
-        </ul>
+        <table className="expenses-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th className="amount-header">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.map((expense) => (
+              <tr key={expense.id} className="expense-table-row">
+                <td>{new Date(expense.date).toLocaleDateString()}</td>
+                <td>{expense.description || 'No Description'}</td>
+                <td>${expense.amount.toFixed(2)} {expense.currency || ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
