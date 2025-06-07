@@ -26,7 +26,6 @@ function App() {
     setIsAuthenticated(true);
     setCurrentUserId(userId);
 
-    alert('Login successful!'); // TODO: For testing
     navigate('/dashboard');
   };
 
@@ -41,8 +40,6 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>Expense Tracker</h1>
-
       <Routes>
         <Route
           path="/auth"

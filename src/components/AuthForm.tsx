@@ -71,40 +71,45 @@ const AuthForm: React.FC<AuthFormProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="auth-form-container">
-      <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div className="auth-form-layout">
+      <main className="auth-form-content">
+        <div className="auth-form-container">
+          <h1 className="app-name">Expensy</h1>
+          <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+          {error && <p className="error">{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" disabled={loading}>
+              {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
+            </button>
+          </form>
+          <p className="switch-mode-text">
+            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            <button type="button" onClick={() => setIsLogin(!isLogin)}>
+              {isLogin ? 'Sign Up' : 'Login'}
+            </button>
+          </p>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
-        </button>
-      </form>
-      <p className="switch-mode-text">
-        {isLogin ? "Don't have an account? " : "Already have an account? "}
-        <button type="button" onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? 'Sign Up' : 'Login'}
-        </button>
-      </p>
+      </main>
     </div>
   );
 };
