@@ -1,6 +1,6 @@
 # Expensy Frontend
 
-WIP as of 05/23/25
+WIP as of 06/06/25
 
 ## Tech Stack
 
@@ -60,6 +60,16 @@ This is the frontend for **Expensy**, a budgeting application that helps users t
    ```bash
    npm run preview
    ```
+## WIP Screens
+
+<details><summary>Log In</summary>
+   <img width="1450" alt="Screenshot 2025-06-06 at 6 17 29 PM" src="https://github.com/user-attachments/assets/78d684d7-af80-401d-9592-507dbebc2c4b" />
+</details>
+
+<details><summary>Logged In</summary>
+   <img width="1450" alt="Screenshot 2025-06-06 at 6 16 56 PM" src="https://github.com/user-attachments/assets/986c0765-e8dc-4155-af07-33d9f8b71d6e" />
+</details>
+
 
 ## Authors
 
