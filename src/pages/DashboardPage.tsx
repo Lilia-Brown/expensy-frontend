@@ -11,6 +11,7 @@ interface DashboardPageProps {
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }) => {
+  const [selectedCity, setSelectedCity] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [userImageUrl, setUserImageUrl] = useState<string | undefined>(undefined);
 
@@ -70,14 +71,21 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
 
   }, [currentUserId, onLogout]);
 
+  const handleCityChange = (city: string) => {
+    setSelectedCity(city);
+  };
+
   return (
     <div className="dashboard-layout">
       <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
 
       <main className="main-content">
         <div className="content-grid">
-          <BudgetCard currentUserId={currentUserId} />
-          <ExpenseList />
+          <BudgetCard
+            currentUserId={currentUserId}
+            onCityChange={handleCityChange}
+          />
+          <ExpenseList/>
 
           {/* TODO: Clean up Dashboard and Components */}
           {/* <div className="placeholder-card">

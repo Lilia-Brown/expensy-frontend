@@ -19,6 +19,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
+  position: relative;
 }
 
 .budget-card-header h3 {
@@ -28,11 +29,67 @@
   font-weight: 600;
 }
 
+.options-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
 .options-icon {
-  font-size: 1.6em;
-  color: #6c757d;
-  cursor: pointer;
-  padding: 5px;
+   
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 5px;
+    color: #6c757d;
+    transition: color 0.2s ease-in-out;
+}
+
+.options-icon:hover {
+    color: #343a40;
+}
+
+.options-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    z-index: 1000;
+    padding: 10px 0;
+    margin-top: 5px;
+    list-style: none;
+    text-align: left;
+}
+
+.options-dropdown h4 {
+    font-size: 0.9em;
+    color: #6c757d;
+    padding: 5px 15px;
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.options-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options-dropdown li {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #333;
+    transition: background-color 0.2s ease-in-out;
+    white-space: nowrap;
+}
+
+.options-dropdown li:hover {
+    background-color: #f0f0f0;
 }
 
 .budget-city {

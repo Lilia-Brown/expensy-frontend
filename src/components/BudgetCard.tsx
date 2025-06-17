@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/components/BudgetCard.css';
 
 interface Budget {
@@ -27,15 +27,32 @@ interface Expense {
 
 interface BudgetCardProps {
   currentUserId: string | null;
+  onCityChange: (city: string) => void;
 }
 
-const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
+const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId, onCityChange }) => {
   const [budget, setBudget] = useState<Budget | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string>('');
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [userBudgets, setUserBudgets] = useState<Budget[]>([]);
 
-  const currentCity = "San Francisco"; // TODO: This is hardcoded temporarily
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchBudgetData = async () => {
@@ -59,12 +76,31 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
         if (!budgetResponse.ok) {
           throw new Error(`Failed to fetch budgets: ${budgetResponse.statusText}`);
         }
-        const userBudgets: Budget[] = await budgetResponse.json();
+        const fetchedUserBudgets: Budget[] = await budgetResponse.json();
+        setUserBudgets(fetchedUserBudgets);
 
-        const relevantBudget = userBudgets.find(b => b.city === currentCity) || userBudgets[0];
+        let cityToDisplay = selectedCity;
+        if (!cityToDisplay && fetchedUserBudgets.length > 0) {
+            const sanFranciscoBudget = fetchedUserBudgets.find(b => b.city === "San Francisco");
+            cityToDisplay = sanFranciscoBudget ? "San Francisco" : fetchedUserBudgets[0].city;
+        }
+
+        if (!cityToDisplay && fetchedUserBudgets.length === 0) {
+            setBudget(null);
+            setExpenses([]);
+            setIsLoading(false);
+            onCityChange('');
+            return;
+        }
+
+        setSelectedCity(cityToDisplay);
+        onCityChange(cityToDisplay);
+
+        const relevantBudget = fetchedUserBudgets.find(b => b.city === cityToDisplay);
 
         if (!relevantBudget) {
-          setError('No budget found for the current user or city.');
+          setBudget(null);
+          setExpenses([]);
           setIsLoading(false);
           return;
         }
@@ -99,7 +135,7 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
     };
 
     fetchBudgetData();
-  }, [currentUserId, currentCity]);
+  }, [currentUserId, selectedCity]);
 
   const calculateSpending = () => {
     if (!budget) return { spent: 0, remaining: 0, percentage: 0 };
@@ -127,6 +163,13 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
     progressBarClass = 'orange';
   }
 
+  const uniqueCities = Array.from(new Set(userBudgets.map(b => b.city)));
+
+  const handleCityChange = (city: string) => {
+    setSelectedCity(city);
+    setShowMenu(false);
+  };
+
   if (isLoading) {
     return <div className="budget-card loading-text">Loading budget data...</div>;
   }
@@ -135,21 +178,69 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
     return <div className="budget-card error-text">Error: {error}</div>;
   }
 
-  if (!budget) {
-    return <div className="budget-card">No budget found for {currentCity}. Please create one.</div>;
+  if (!budget && userBudgets.length > 0) {
+    return (
+        <div className="budget-card">
+            <h3>Current City Budget</h3>
+            <div className="budget-card-header">
+                <p>No budget found for {selectedCity}. Please select another city or create one.</p>
+                <div className="options-menu-container" ref={menuRef}>
+                    <span className="options-icon" onClick={() => setShowMenu(!showMenu)}>...</span>
+                    {showMenu && (
+                        <div className="options-dropdown">
+                            <h4>Change City</h4>
+                            {uniqueCities.length === 0 ? (
+                                <p>No other cities available.</p>
+                            ) : (
+                                <ul>
+                                    {uniqueCities.map(city => (
+                                        <li key={city} onClick={() => handleCityChange(city)}>
+                                            {city} {city === selectedCity && '(Current)'}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
   }
 
-  const budgetPeriod = `${new Date(budget.startDate).toLocaleDateString()} - ${new Date(budget.endDate).toLocaleDateString()}`;
+  if (!budget && userBudgets.length === 0) {
+    return <div className="budget-card">No budgets found for this user. Please create one.</div>;
+  }
+
+  const budgetPeriod = `${new Date(budget!.startDate).toLocaleDateString()} - ${new Date(budget!.endDate).toLocaleDateString()}`;
 
   return (
     <div className="budget-card">
       <div className="budget-card-header">
         <h3>Current City Budget</h3>
-        <span className="options-icon">...</span>
+        <div className="options-menu-container" ref={menuRef}>
+            <span className="options-icon" onClick={() => setShowMenu(!showMenu)}>...</span>
+            {showMenu && (
+                <div className="options-dropdown">
+                    <h4>Change City</h4>
+                    {uniqueCities.length === 0 ? (
+                        <p>No other cities available.</p>
+                    ) : (
+                        <ul>
+                            {uniqueCities.map(city => (
+                                <li key={city} onClick={() => handleCityChange(city)}>
+                                    {city} {city === selectedCity && '(Current)'}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            )}
+        </div>
       </div>
       
       <div className="budget-city">
-        {budget.city}
+        {budget!.city}
       </div>
 
       <div className="budget-details">
@@ -159,15 +250,15 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId }) => {
         </div>
         <div className="budget-detail-item">
           <span className="budget-label">Total Budget</span>
-          <span className="total-budget-value">{budget.budgetAmount.toFixed(2)} {budget.currency}</span>
+          <span className="total-budget-value">{budget!.budgetAmount.toFixed(2)} {budget!.currency}</span>
         </div>
         <div className="budget-detail-item">
           <span className="budget-label">Spent</span>
-          <span className="spent-amount">{spent.toFixed(2)} {budget.currency}</span>
+          <span className="spent-amount">{spent.toFixed(2)} {budget!.currency}</span>
         </div>
         <div className="budget-detail-item">
           <span className="budget-label">Remaining</span>
-          <span className={`remaining-amount ${progressBarClass}`} >{remaining.toFixed(2)} {budget.currency}</span>
+          <span className={`remaining-amount ${progressBarClass}`} >{remaining.toFixed(2)} {budget!.currency}</span>
         </div>
       </div>
 
