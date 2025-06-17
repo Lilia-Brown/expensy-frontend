@@ -31,7 +31,12 @@ interface Expense {
   category: Category;
 }
 
-const ExpenseList: React.FC = () => {
+interface ExpenseListProps {
+  currentUserId: string | null;
+  selectedCity: string;
+}
+
+const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,8 +56,24 @@ const ExpenseList: React.FC = () => {
         return;
       }
 
+      if (!currentUserId) {
+        setError('User ID not found. Please log in.');
+        setLoading(false);
+        return;
+      }
+
+      if (!selectedCity) {
+        setExpenses([]);
+        setLoading(false);
+        return;
+      }
+
+
       try {
-        const response = await fetch(`${API_BASE_URL}/expenses`, {
+        const url = new URL(`${API_BASE_URL}/expenses`);
+        url.searchParams.append('city', selectedCity);
+
+        const response = await fetch(url.toString(), {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -76,7 +97,7 @@ const ExpenseList: React.FC = () => {
     };
 
     fetchExpenses();
-  }, []);
+  }, [API_BASE_URL, currentUserId, selectedCity]);
 
   if (loading) {
     return <p className="loading-message">Loading expenses...</p>;
@@ -85,6 +106,11 @@ const ExpenseList: React.FC = () => {
   if (error) {
     return <p className="error-message">Error: {error}</p>;
   }
+
+  if (!selectedCity) {
+      return <p className="no-expenses-message">Please select a city from the Budget Card to view expenses.</p>;
+  }
+
 
   return (
     <div className="expense-list-container">
@@ -96,7 +122,7 @@ const ExpenseList: React.FC = () => {
       </div>
 
       {expenses.length === 0 ? (
-        <p className="no-expenses-message">No expenses found for this user. Time to add some!</p>
+        <p className="no-expenses-message">No expenses found for {selectedCity}. Time to add some!</p>
       ) : (
         <table className="expenses-table">
           <thead>

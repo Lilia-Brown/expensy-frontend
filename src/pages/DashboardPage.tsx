@@ -85,7 +85,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
             currentUserId={currentUserId}
             onCityChange={handleCityChange}
           />
-          <ExpenseList/>
+          <ExpenseList
+            currentUserId={currentUserId}
+            selectedCity={selectedCity}
+          />
 
           {/* TODO: Clean up Dashboard and Components */}
           {/* <div className="placeholder-card">
