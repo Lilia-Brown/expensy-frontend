@@ -3,7 +3,7 @@
   padding: 20px;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 900px;
-  margin: 20px auto;
+  margin: 0 auto 20px auto;
 }
 
 .loading-message,

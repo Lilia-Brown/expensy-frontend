@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-// import AddExpenseForm from '../components/AddExpenseForm';
+import AddExpenseButton from '../components/AddExpenseButton';
 import ExpenseList from '../components/ExpenseList';
 import BudgetCard from '../components/BudgetCard';
 import '../styles/pages/DashboardPage.css';
@@ -85,16 +85,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
             currentUserId={currentUserId}
             onCityChange={handleCityChange}
           />
+          <AddExpenseButton
+            currentUserId={currentUserId}
+          />
           <ExpenseList
             currentUserId={currentUserId}
             selectedCity={selectedCity}
           />
-
-          {/* TODO: Clean up Dashboard and Components */}
-          {/* <div className="placeholder-card">
-            <h3>Add New Expense</h3>
-            <AddExpenseForm />
-          </div> */}
 
         </div>
       </main>

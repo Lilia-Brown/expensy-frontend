@@ -1,0 +1,22 @@
+.add-expense-button-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .add-expense-button {
+    padding: 12px 20px;
+    background-color: #111111;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .add-expense-button:hover {
+    background-color: #222222;
+  }
+  
