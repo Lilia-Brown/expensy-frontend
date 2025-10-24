@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import AuthForm from './components/AuthForm';
+import AddExpensePage from './pages/AddExpensePage';
 import DashboardPage from './pages/DashboardPage.tsx';
 
 function App() {
@@ -48,6 +49,17 @@ function App() {
               <Navigate to="/dashboard" replace />
             ) : (
               <AuthForm onLoginSuccess={handleLoginSuccess} />
+            )
+          }
+        />
+
+        <Route
+          path="/add-expense"
+          element={
+            isAuthenticated ? (
+              <AddExpensePage currentUserId={currentUserId} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/auth" replace />
             )
           }
         />

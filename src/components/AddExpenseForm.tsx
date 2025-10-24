@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/components/AddExpenseForm.css';
 
 interface Category {
@@ -17,9 +18,13 @@ interface ExpenseFormData {
   categoryId: string;
 }
 
+interface AddExpenseFormProps {
+  currentUserId: string | null;
+}
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const AddExpenseForm: React.FC = () => {
+const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
   const [formData, setFormData] = useState<ExpenseFormData>({
     amount: '',
     currency: 'USD',
@@ -149,128 +154,99 @@ const AddExpenseForm: React.FC = () => {
   }
 
   return (
-    <div className="expense-form-container">
-      <h2>Add New Expense</h2>
+    <div className="form-card">
+      <h3 className="section-title">Expense Details</h3>
+
       {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
+      {success && <p className="success-card">✅ {success}</p>}
+
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="amount" className="label">Amount:</label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-            required
-            step="0.01"
-            className="input"
-          />
+        <div className="form-row">
+          <div className="form-group form-group-half">
+            <label htmlFor="amount" className="label">Amount (USD)</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+              step="0.01"
+              className="input"
+            />
+          </div>
+          <div className="form-group form-group-half">
+            <label htmlFor="date" className="label">Date</label>
+            <input
+              type="datetime-local"
+              id="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+              className="input"
+            />
+          </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="currency" className="label">Currency:</label>
-          <input
-            type="text"
-            id="currency"
-            name="currency"
-            value={formData.currency}
-            onChange={handleChange}
-            required
-            className="input"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="description" className="label">Description:</label>
+          <label htmlFor="description" className="label">Description</label>
           <input
             type="text"
             id="description"
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="input"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="date" className="label">Date:</label>
-          <input
-            type="datetime-local"
-            id="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
             required
             className="input"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="city" className="label">City:</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            required
-            className="input"
-          />
+        <div className="form-row">
+          <div className="form-group form-group-half">
+            <label htmlFor="city" className="label">City</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+              className="input"
+            />
+          </div>
+          <div className="form-group form-group-half">
+            <label htmlFor="categoryId" className="label">Category</label>
+            <select
+              id="categoryId"
+              name="categoryId"
+              value={formData.categoryId}
+              onChange={handleChange}
+              required
+              className="select"
+              disabled={loading && categories.length === 0}
+            >
+              {loading && categories.length === 0 ? (
+                <option value="">Loading categories...</option>
+              ) : categories.length === 0 ? (
+                <option value="">No categories found</option>
+              ) : (
+                categories.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="categoryId" className="label">Category:</label>
-          <select
-            id="categoryId"
-            name="categoryId"
-            value={formData.categoryId}
-            onChange={handleChange}
-            required
-            className="select"
-            disabled={loading}
-          >
-            {loading && categories.length === 0 ? (
-              <option value="">Loading categories...</option>
-            ) : categories.length === 0 ? (
-              <option value="">No categories found</option>
-            ) : (
-              categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))
-            )}
-          </select>
+        <div className="form-buttons">
+          <Link to="/dashboard" className="button secondary-button">Cancel</Link>
+          <button type="submit" disabled={loading} className="button primary-button">
+            {loading ? 'Saving...' : 'Save Expense'}
+          </button>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="notes" className="label">Notes:</label>
-          <textarea
-            id="notes"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            rows={3}
-            className="textarea"
-          ></textarea>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="source" className="label">Source:</label>
-          <input
-            type="text"
-            id="source"
-            name="source"
-            value={formData.source}
-            onChange={handleChange}
-            className="input"
-          />
-        </div>
-
-        <button type="submit" disabled={loading} className="button">
-          {loading ? 'Adding Expense...' : 'Add Expense'}
-        </button>
       </form>
     </div>
   );
