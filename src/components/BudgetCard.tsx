@@ -244,21 +244,21 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId, onCityChange }) 
       </div>
 
       <div className="budget-details">
-        <div className="budget-detail-item">
+        <div className="budget-detail-item budget-period-item">
           <span className="budget-label">Budget Period</span>
           <span className="budget-value">{budgetPeriod}</span>
         </div>
         <div className="budget-detail-item">
           <span className="budget-label">Total Budget</span>
-          <span className="total-budget-value">{budget!.budgetAmount.toFixed(2)} {budget!.currency}</span>
+          <span className="total-budget-value">${budget!.budgetAmount.toFixed(2)} {budget!.currency}</span>
         </div>
         <div className="budget-detail-item">
           <span className="budget-label">Spent</span>
-          <span className="spent-amount">{spent.toFixed(2)} {budget!.currency}</span>
+          <span className="spent-amount">${spent.toFixed(2)} {budget!.currency}</span>
         </div>
         <div className="budget-detail-item">
           <span className="budget-label">Remaining</span>
-          <span className={`remaining-amount ${progressBarClass}`} >{remaining.toFixed(2)} {budget!.currency}</span>
+          <span className={`remaining-amount ${progressBarClass}`} >${remaining.toFixed(2)} {budget!.currency}</span>
         </div>
       </div>
 
@@ -274,7 +274,9 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId, onCityChange }) 
       </div>
 
       <div className="budget-alerts">
-        Budget Alerts: Your Budget Alerts (Coming Soon!)
+        <div className="alert-pill green">
+          Budget Alerts
+        </div>
       </div>
     </div>
   );

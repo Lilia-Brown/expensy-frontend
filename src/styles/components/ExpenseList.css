@@ -67,15 +67,16 @@
 .expenses-table th,
 .expenses-table td {
   padding: 12px 15px;
+  padding: 16px 15px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .expenses-table th {
   background-color: transparent;
-  color: #444;
-  font-weight: normal;
-  text-transform: none;
+  color: #888888;
+  font-weight: bold;
+  text-transform: uppercase;
   font-size: 1em;
 }
 
@@ -88,7 +89,7 @@
 }
 
 .expenses-table tbody tr:hover {
-  background-color: #f5f5f5;
+  background-color: #fafafa;
 }
 
 .expense-table-row td:nth-child(1) {
@@ -105,6 +106,7 @@
 .expense-table-row td:nth-child(3) {
   color: #444;
   text-align: right;
+  font-weight: 500;
   white-space: nowrap;
   width: 120px;
 }

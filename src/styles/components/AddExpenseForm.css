@@ -51,14 +51,15 @@
 .button {
   display: block;
   width: 100%;
-  padding: 12px 20px;
-  background-color: #007bff;
+  padding: 10px 20px;
+  background-color: #343a40;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1.1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover:not(:disabled) {

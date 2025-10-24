@@ -1,17 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 .budget-card {
-  background-color: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  background-color: #FFFFFF;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
   gap: 15px;
   min-height: 220px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: #343a40;
+  border: 1px solid #e9ecef;
 }
 
 .budget-card-header {
@@ -24,8 +25,8 @@
 
 .budget-card-header h3 {
   margin: 0;
-  color: #212529;
-  font-size: 1.6em;
+  color: #000000;
+  font-size: 1.2em;
   font-weight: 600;
 }
 
@@ -93,39 +94,55 @@
 }
 
 .budget-city {
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: 700;
   color: #343a40;
-  margin-top: -5px;
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 
 .budget-details {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
   margin-bottom: 10px;
 }
 
 .budget-detail-item {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 1em;
-  font-weight: 400;
-  color: #6c757d;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .budget-label {
-  flex-shrink: 0;
-  padding-right: 15px;
+  font-size: 0.9em;
+  color: #888888;
+  margin-bottom: 4px;
 }
 
 .budget-value,
 .total-budget-value,
 .spent-amount,
 .remaining-amount {
-  text-align: right;
-  flex-grow: 1;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #343a40;
+}
+
+.budget-period-item {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.budget-period-item .budget-label {
+  font-size: 0.9em;
+  color: #888888;
+}
+
+.budget-period-item .budget-value {
+  font-size: 1em;
+  font-weight: 500;
+  color: #6c757d;
 }
 
 .remaining-amount.green {
@@ -133,7 +150,7 @@
 }
 
 .remaining-amount.orange {
-  color: #ffc107;
+  color: #fd7e14;
 }
 
 .remaining-amount.red {
@@ -151,15 +168,15 @@
 .progress-bar-container {
   width: 100%;
   background-color: #e9ecef;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  height: 18px;
+  height: 12px;
   margin-bottom: 8px;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
   display: flex;
   align-items: center;
@@ -170,7 +187,7 @@
 }
 
 .progress-bar-fill.orange {
-  background-color: #ffc107;
+  background-color: #fd7e14;
 }
 
 .progress-bar-fill.red {
@@ -186,10 +203,23 @@
 
 
 .budget-alerts {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #6c757d;
-  font-style: normal;
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.alert-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.alert-pill.green {
+  background-color: #e6f4ea;
+  color: #28a745;
 }
 
 .loading-text, .error-text {
@@ -202,4 +232,10 @@
 .error-text {
   color: #dc3545;
   font-weight: bold;
+}
+
+@media (max-width: 360px) {
+  .budget-detail-item {
+    font-size: 0.95em;
+  }
 }
