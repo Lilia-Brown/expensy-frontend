@@ -67,7 +67,9 @@ This is the frontend for **Expensy**, a budgeting application that helps users t
 </details>
 
 <details><summary>Logged In</summary>
-   <img width="1450" alt="Screenshot 2025-06-06 at 6 16 56 PM" src="https://github.com/user-attachments/assets/986c0765-e8dc-4155-af07-33d9f8b71d6e" />
+   <img width="1450" alt="251024 - Dashboard" src="https://github.com/user-attachments/assets/6e5e1923-623d-4a5a-8db7-cf435585a71c" />
+   <img width="1450" alt="251024 - Add Expense" src="https://github.com/user-attachments/assets/4ada0ce7-278a-46b8-a061-f58a78d3fe24" />
+
 </details>
 
 
