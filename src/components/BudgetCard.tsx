@@ -181,7 +181,7 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId, onCityChange }) 
   if (!budget && userBudgets.length > 0) {
     return (
         <div className="budget-card">
-            <h3>Current City Budget</h3>
+            <h3>{selectedCity} Budget</h3>
             <div className="budget-card-header">
                 <p>No budget found for {selectedCity}. Please select another city or create one.</p>
                 <div className="options-menu-container" ref={menuRef}>
@@ -217,7 +217,7 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId, onCityChange }) 
   return (
     <div className="budget-card">
       <div className="budget-card-header">
-        <h3>Current City Budget</h3>
+        <h3>{selectedCity} Budget</h3>
         <div className="options-menu-container" ref={menuRef}>
             <span className="options-icon" onClick={() => setShowMenu(!showMenu)}>...</span>
             {showMenu && (
@@ -238,14 +238,10 @@ const BudgetCard: React.FC<BudgetCardProps> = ({ currentUserId, onCityChange }) 
             )}
         </div>
       </div>
-      
-      <div className="budget-city">
-        {budget!.city}
-      </div>
 
       <div className="budget-details">
         <div className="budget-detail-item budget-period-item">
-          <span className="budget-label">Budget Period</span>
+          <span className="budget-label">Dates</span>
           <span className="budget-value">{budgetPeriod}</span>
         </div>
         <div className="budget-detail-item">

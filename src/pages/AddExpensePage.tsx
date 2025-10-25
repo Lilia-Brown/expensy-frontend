@@ -73,7 +73,6 @@ const AddExpensePage: React.FC<AddExpensePageProps> = ({ currentUserId, onLogout
       <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
 
       <main className="main-content">
-        <h2 className="page-title">Add New Expense</h2>
         <AddExpenseForm currentUserId={currentUserId} />
       </main>
     </div>

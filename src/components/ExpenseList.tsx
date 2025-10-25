@@ -4,6 +4,7 @@ import '../styles/components/ExpenseList.css';
 interface Category {
   id: string;
   name: string;
+  color?: string | null;
 }
 
 interface User {
@@ -129,14 +130,19 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }
             <tr>
               <th>Date</th>
               <th>Description</th>
-              <th className="amount-header">Amount</th>
+              <th>Amount</th>
             </tr>
           </thead>
           <tbody>
             {expenses.map((expense) => (
               <tr key={expense.id} className="expense-table-row">
                 <td>{new Date(expense.date).toLocaleDateString()}</td>
-                <td>{expense.description || 'No Description'}</td>
+                <td>
+                  <div className="description-cell">
+                    <span className="category-dot" style={{ backgroundColor: expense.category?.color || '#ccc' }}></span>
+                    {expense.description || 'No Description'}
+                  </div>
+                </td>
                 <td>${expense.amount.toFixed(2)} {expense.currency || ''}</td>
               </tr>
             ))}

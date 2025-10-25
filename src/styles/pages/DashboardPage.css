@@ -32,10 +32,6 @@
 }
 
 @media (max-width: 767px) {
-  .main-content {
-    padding: 15px;
-  }
-
   .content-grid {
     gap: 20px;
   }

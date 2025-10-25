@@ -155,7 +155,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
 
   return (
     <div className="form-card">
-      <h3 className="section-title">Expense Details</h3>
+      <h3 className="section-title">New Expense</h3>
 
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-card">✅ {success}</p>}
