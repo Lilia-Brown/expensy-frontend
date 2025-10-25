@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'r
 
 import AuthForm from './components/AuthForm';
 import AddExpensePage from './pages/AddExpensePage';
+import CityExpensesPage from './pages/CityExpensesPage';
 import DashboardPage from './pages/DashboardPage.tsx';
 
 function App() {
@@ -58,6 +59,17 @@ function App() {
           element={
             isAuthenticated ? (
               <AddExpensePage currentUserId={currentUserId} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/auth" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/city-expenses/:city"
+          element={
+            isAuthenticated ? (
+              <CityExpensesPage currentUserId={currentUserId} onLogout={handleLogout} />
             ) : (
               <Navigate to="/auth" replace />
             )

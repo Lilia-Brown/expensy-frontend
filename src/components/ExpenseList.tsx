@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/components/ExpenseList.css';
 
 interface Category {
@@ -35,9 +36,10 @@ interface Expense {
 interface ExpenseListProps {
   currentUserId: string | null;
   selectedCity: string;
+  isPreview: boolean;
 }
 
-const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }) => {
+const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, isPreview }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -73,6 +75,10 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }
       try {
         const url = new URL(`${API_BASE_URL}/expenses`);
         url.searchParams.append('city', selectedCity);
+
+        if (isPreview) {
+          url.searchParams.append('limit', '3');
+        }
 
         const response = await fetch(url.toString(), {
           method: 'GET',
@@ -116,7 +122,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }
   return (
     <div className="expense-list-container">
       <div className="expense-list-header">
-        <h3>Recent Expenses</h3>
+        <h3>{isPreview ? 'Recent' : selectedCity} Expenses</h3>
         <div className="sort-filter-section">
           {/* TODO: Add sort and filtering */}
         </div>
@@ -151,6 +157,11 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }
             ))}
           </tbody>
         </table>
+      )}
+      {isPreview && expenses.length > 0 && (
+        <div className="view-all-container">
+          <Link to={`/city-expenses/${selectedCity}`} className="view-all-link" title={`View all expenses for ${selectedCity}`}>...</Link>
+        </div>
       )}
     </div>
   );

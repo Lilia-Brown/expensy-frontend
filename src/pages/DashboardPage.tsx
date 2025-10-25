@@ -91,6 +91,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout }
           <ExpenseList
             currentUserId={currentUserId}
             selectedCity={selectedCity}
+            isPreview={true}
           />
 
         </div>

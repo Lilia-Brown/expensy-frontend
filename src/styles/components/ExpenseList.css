@@ -148,6 +148,22 @@
   flex-shrink: 0;
 }
 
+.view-all-container {
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.view-all-link {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #888888;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  transition: color 0.2s ease-in-out;
+}
+
 @media (max-width: 768px) {
   .expense-list-container {
     padding: 10px;
