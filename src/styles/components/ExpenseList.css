@@ -99,7 +99,7 @@
   flex-grow: 1;
 }
 
-.expense-table-row td:nth-child(3) {
+.amount-cell {
   color: #444;
   text-align: right;
   font-weight: 500;
@@ -110,6 +110,34 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.category-dot-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.category-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  white-space: nowrap;
+  z-index: 10;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.category-dot-container:hover .category-tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 .category-dot {

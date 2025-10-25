@@ -139,11 +139,14 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity }
                 <td>{new Date(expense.date).toLocaleDateString()}</td>
                 <td>
                   <div className="description-cell">
-                    <span className="category-dot" style={{ backgroundColor: expense.category?.color || '#ccc' }}></span>
+                    <div className="category-dot-container">
+                      <span className="category-dot" style={{ backgroundColor: expense.category?.color || '#ccc' }}></span>
+                      <span className="category-tooltip">{expense.category?.name || 'Uncategorized'}</span>
+                    </div>
                     {expense.description || 'No Description'}
                   </div>
                 </td>
-                <td>${expense.amount.toFixed(2)} {expense.currency || ''}</td>
+                <td className="amount-cell">${expense.amount.toFixed(2)} {expense.currency || ''}</td>
               </tr>
             ))}
           </tbody>
