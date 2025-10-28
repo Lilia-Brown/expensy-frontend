@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import '../styles/pages/ExpensePage.css';
 import ExpenseShowPage from './ExpenseShowPage';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 interface Category {
   id: string;
@@ -77,51 +78,26 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
 
   }, [id, currentUserId, API_BASE_URL]);
 
-  if (loading) {
-    return (
-      <div className="dashboard-layout">
-        <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
-        <main className="main-content">
-          <div className="loading-message">Loading expense details...</div>
-        </main>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="dashboard-layout">
-        <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
-        <main className="main-content">
-          <div className="error-message">Error: {error}</div>
-        </main>
-      </div>
-    );
-  }
-
-  if (!expense) {
-    return (
-      <div className="dashboard-layout">
-        <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
-        <main className="main-content">
-          <div className="no-expenses-message">Expense not found.</div>
-        </main>
-      </div>
-    );
-  }
-
   return (
     <div className="dashboard-layout">
       <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
 
       <main className="main-content">
-        <div className="expense-detail-card">
-          <ExpenseShowPage expense={expense} />
-          <div className="expense-detail-actions">
-            <button className="button secondary-button">Edit</button>
-            <button className="button danger-button">Delete</button>
+        {loading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          <div className="error-message">Error: {error}</div>
+        ) : !expense ? (
+          <div className="no-expenses-message">Expense not found.</div>
+        ) : (
+          <div className="expense-detail-card">
+            <ExpenseShowPage expense={expense} />
+            <div className="expense-detail-actions">
+              <button className="button secondary-button">Edit</button>
+              <button className="button danger-button">Delete</button>
+            </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

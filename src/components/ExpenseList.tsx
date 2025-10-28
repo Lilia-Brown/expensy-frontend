@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/components/ExpenseList.css';
 
 import AddExpenseButton from './AddExpenseButton';
+import LoadingSpinner from './LoadingSpinner';
+
 interface Category {
   id: string;
   name: string;
@@ -109,7 +111,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, 
   }, [API_BASE_URL, currentUserId, selectedCity]);
 
   if (loading) {
-    return <p className="loading-message">Loading expenses...</p>;
+    return <LoadingSpinner />;
   }
 
   if (error) {

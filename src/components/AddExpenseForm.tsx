@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/AddExpenseForm.css';
+import LoadingSpinner from './LoadingSpinner';
 
 interface Category {
   id: string;
@@ -146,7 +147,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
   };
 
   if (loading && categories.length === 0) {
-    return <div className="loading-message">Loading categories...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error && categories.length === 0) {
