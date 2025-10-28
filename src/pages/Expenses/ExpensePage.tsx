@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../../styles/pages/Expenses/ExpensePage.css';
 
-import Header from '../../components/Header';
 import ExpenseShowPage from './ExpenseShowPage';
+import Header from '../../components/Header';
 
 interface Category {
   id: string;
@@ -34,6 +34,7 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
   const [expense, setExpense] = useState<Expense | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -78,6 +79,47 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
 
   }, [id, currentUserId, API_BASE_URL]);
 
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this expense? This action cannot be undone.')) {
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setError('Authentication token not found. Please log in.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to delete expense: ${response.statusText}`);
+      }
+
+      if (expense) {
+        navigate(`/city-expenses/${expense.city}`);
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (err: any) {
+      console.error('Error deleting expense:', err.message);
+      setError(err.message || 'Failed to delete expense.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="dashboard-layout">
       <Header username={username} onLogout={onLogout} userImageUrl={userImageUrl} />
@@ -96,7 +138,7 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
             <ExpenseShowPage expense={expense} />
             <div className="expense-detail-actions">
               <button className="button secondary-button">Edit</button>
-              <button className="button danger-button">Delete</button>
+              <button className="button danger-button" onClick={handleDelete} disabled={loading}>Delete</button>
             </div>
           </div>
         )}
