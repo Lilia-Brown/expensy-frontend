@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import '../styles/pages/ExpensePage.css';
+import ExpenseShowPage from './ExpenseShowPage';
 
 interface Category {
   id: string;
@@ -115,16 +116,7 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
 
       <main className="main-content">
         <div className="expense-detail-card">
-          <div className="expense-detail-header">
-            <span className="expense-amount">${expense.amount.toFixed(2)}</span>
-            <span className="expense-description">{expense.description || 'No Description'}</span>
-          </div>
-          <div className="expense-detail-body">
-            <div className="detail-item"><span className="detail-label">Date:</span> {new Date(expense.date).toLocaleDateString()}</div>
-            <div className="detail-item"><span className="detail-label">City:</span> {expense.city}</div>
-            <div className="detail-item"><span className="detail-label">Category:</span> <span className="category-dot" style={{ backgroundColor: expense.category?.color || '#ccc' }}></span> {expense.category.name}</div>
-            {expense.notes && <div className="detail-item notes-item"><span className="detail-label">Notes:</span> {expense.notes}</div>}
-          </div>
+          <ExpenseShowPage expense={expense} />
           <div className="expense-detail-actions">
             <button className="button secondary-button">Edit</button>
             <button className="button danger-button">Delete</button>
