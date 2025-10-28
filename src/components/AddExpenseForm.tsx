@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/components/AddExpenseForm.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -28,13 +28,12 @@ interface ExpenseFormData {
 }
 
 interface AddExpenseFormProps {
-  currentUserId: string | null;
   prefilledCity?: string;
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefilledCity }) => {
+const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ prefilledCity }) => {
   const [formData, setFormData] = useState<ExpenseFormData>({
     amount: '',
     currency: 'USD',
@@ -51,6 +50,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -167,20 +167,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
         throw new Error(errorData.error || `Failed to add expense: ${response.statusText}`);
       }
 
-      const newExpense = await response.json();
-      console.log('Expense added successfully:', newExpense);
-      setSuccess('Expense added successfully!');
-
-      setFormData({
-        amount: '',
-        currency: 'USD',
-        description: '',
-        date: new Date().toISOString().slice(0, 10),
-        city: prefilledCity || (cities.length > 0 ? cities[0] : ''),
-        notes: '',
-        source: 'manual',
-        categoryId: categories.length > 0 ? categories[0].id : '',
-      });
+      navigate(`/city-expenses/${formData.city}`);
 
     } catch (err: any) {
       console.error('Error adding expense:', err);
@@ -295,6 +282,18 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
               )}
             </select>
           </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="notes" className="label">Notes</label>
+          <textarea
+            id="notes"
+            name="notes"
+            value={formData.notes}
+            onChange={handleChange}
+            rows={3}
+            className="textarea"
+          ></textarea>
         </div>
 
         <div className="form-buttons">

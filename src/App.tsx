@@ -127,7 +127,6 @@ function App() {
             path="/add-expense"
             element={
             <AddExpensePage
-                currentUserId={currentUserId}
                 onLogout={handleLogout}
                 username={username}
                 userImageUrl={userImageUrl}
