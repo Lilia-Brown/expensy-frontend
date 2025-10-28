@@ -43,13 +43,28 @@ function App() {
     setLoading(false);
   }, []);
 
-  const handleLoginSuccess = (token: string, userId: string) => {
+  const handleLoginSuccess = async (token: string, userId: string) => {
     localStorage.setItem('authToken', token);
     localStorage.setItem('userId', userId);
     setIsAuthenticated(true);
     setCurrentUserId(userId);
 
-    navigate('/dashboard');
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch user details on login');
+      }
+      const userData = await response.json();
+      setUsername(userData.username || userData.email.split('@')[0]);
+      setUserImageUrl(userData.userImageUrl);
+      navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
+      // Still navigate, but the header might not have the username
+      navigate('/dashboard');
+    }
   };
 
   const handleLogout = () => {
