@@ -26,6 +26,7 @@
 }
 
 .form-card .input,
+.expense-detail-card .input,
 .select,
 .textarea {
   width: 100%;
@@ -45,7 +46,10 @@
 
 .form-card .input:focus,
 .form-card .select:focus,
-.form-card .textarea:focus {
+.form-card .textarea:focus,
+.expense-detail-card .input:focus,
+.expense-detail-card .select:focus,
+.expense-detail-card .textarea:focus {
   border-color: #9CA3AF;
   outline: none;
   box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);

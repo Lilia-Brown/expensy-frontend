@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../styles/pages/Expenses/ExpensePage.css';
 
+import ExpenseEditPage from './ExpenseEditPage';
 import ExpenseShowPage from './ExpenseShowPage';
 import Header from '../../components/Header';
 
@@ -20,6 +21,7 @@ interface Expense {
   city: string;
   notes?: string;
   category: Category;
+  categoryId: string;
 }
 
 interface ExpensePageProps {
@@ -32,6 +34,7 @@ interface ExpensePageProps {
 const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, username, userImageUrl }) => {
   const { id } = useParams<{ id: string }>();
   const [expense, setExpense] = useState<Expense | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -64,8 +67,11 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
           const errorData = await response.json();
           throw new Error(errorData.error || `Failed to fetch expense: ${response.statusText}`);
         }
-
-        const expenseData: Expense = await response.json();
+        const expenseData = await response.json();
+        setExpense({
+          ...expenseData,
+          categoryId: expenseData.category?.id || expenseData.categoryId,
+        });
         setExpense(expenseData);
       } catch (err: any) {
         console.error('Error fetching expense:', err.message);
@@ -78,6 +84,49 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
     fetchExpense();
 
   }, [id, currentUserId, API_BASE_URL]);
+
+  const toggleEdit = () => {
+    if (expense) {
+      setIsEditing(!isEditing);
+    }
+  };
+
+  const handleSave = async (updatedData: any) => {
+    setLoading(true);
+    setError(null);
+
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setError('Authentication token not found. Please log in.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update expense.');
+      }
+
+      const expenseData: Expense = await response.json();
+      setExpense(expenseData);
+      setIsEditing(false);
+    } catch (err: any) {
+      console.error('Error updating expense:', err.message);
+      setError(err.message || 'Failed to update expense.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this expense? This action cannot be undone.')) {
@@ -135,11 +184,11 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
           <div className="no-expenses-message">Expense not found.</div>
         ) : (
           <div className="expense-detail-card">
-            <ExpenseShowPage expense={expense} />
-            <div className="expense-detail-actions">
-              <button className="button secondary-button">Edit</button>
-              <button className="button danger-button" onClick={handleDelete} disabled={loading}>Delete</button>
-            </div>
+            {isEditing ? (
+              <ExpenseEditPage expense={expense} onCancel={toggleEdit} onSave={handleSave} />
+            ) : (
+              <ExpenseShowPage expense={expense} loading={loading} onEdit={toggleEdit} onDelete={handleDelete}/>
+            )}
           </div>
         )}
       </main>

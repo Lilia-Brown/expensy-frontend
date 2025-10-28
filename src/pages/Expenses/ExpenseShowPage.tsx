@@ -20,9 +20,12 @@ interface Expense {
 
 interface ExpenseShowPageProps {
   expense: Expense | null;
+  loading: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-const ExpenseShowPage: React.FC<ExpenseShowPageProps> = ({ expense }) => {
+const ExpenseShowPage: React.FC<ExpenseShowPageProps> = ({ expense, loading, onEdit, onDelete }) => {
   if (!expense) {
     return <div className="no-expenses-message">Expense details could not be loaded.</div>;
   }
@@ -37,6 +40,10 @@ const ExpenseShowPage: React.FC<ExpenseShowPageProps> = ({ expense }) => {
           <div className="detail-item"><span className="detail-label">City:</span> {expense.city}</div>
           <div className="detail-item"><span className="detail-label">Category:</span> <span className="category-dot" style={{ backgroundColor: expense.category?.color || '#ccc' }}></span> {expense.category.name}</div>
           {expense.notes && <div className="detail-item notes-item"><span className="detail-label">Notes:</span> {expense.notes}</div>}
+      </div>
+      <div className="expense-detail-actions">
+        <button className="button secondary-button" onClick={onEdit} disabled={loading}>Edit</button>
+        <button className="button danger-button" onClick={onDelete} disabled={loading}>Delete</button>
       </div>
       </>
   );
