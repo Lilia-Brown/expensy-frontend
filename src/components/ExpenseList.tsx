@@ -127,7 +127,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, 
         <h3>{isPreview ? 'Recent' : selectedCity} Expenses</h3>
         <div className="add-expense-button-container">
           {!isPreview && (
-            <AddExpenseButton currentUserId={currentUserId} />
+            <AddExpenseButton />
           )}
         </div>
       </div>

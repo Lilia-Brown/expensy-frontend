@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import AddExpenseButton from '../components/AddExpenseButton';
 import ExpenseList from '../components/ExpenseList';
@@ -29,9 +29,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ currentUserId, onLogout, 
             currentUserId={currentUserId}
             onCityChange={handleCityChange}
           />
-          <AddExpenseButton
-            currentUserId={currentUserId}
-          />
+          <AddExpenseButton />
           <ExpenseList
             currentUserId={currentUserId}
             selectedCity={selectedCity}

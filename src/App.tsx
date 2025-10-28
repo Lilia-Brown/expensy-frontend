@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, Outlet }
 
 import AuthForm from './components/AuthForm';
 import AddExpensePage from './pages/AddExpensePage';
-import CityExpensesPage from './pages/CityExpensesPage';
+import ExpensesPage from './pages/ExpensesPage.tsx';
 import DashboardPage from './pages/DashboardPage.tsx';
 import ExpensePage from './pages/ExpensePage';
 
@@ -122,7 +122,7 @@ function App() {
           <Route
             path="/city-expenses/:city"
             element={
-              <CityExpensesPage currentUserId={currentUserId} onLogout={handleLogout} username={username} userImageUrl={userImageUrl} />
+              <ExpensesPage currentUserId={currentUserId} onLogout={handleLogout} username={username} userImageUrl={userImageUrl} />
             }
           />
         </Route>
