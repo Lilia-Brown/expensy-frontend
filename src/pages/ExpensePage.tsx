@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header';
 import '../styles/pages/ExpensePage.css';
+
 import ExpenseShowPage from './ExpenseShowPage';
+import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 interface Category {

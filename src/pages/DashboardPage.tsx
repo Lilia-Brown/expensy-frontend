@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import AddExpenseButton from '../components/AddExpenseButton';
-import ExpenseList from '../components/ExpenseList';
-import BudgetCard from '../components/BudgetCard';
 import '../styles/pages/DashboardPage.css';
+
+import AddExpenseButton from '../components/AddExpenseButton';
+import BudgetCard from '../components/BudgetCard';
+import ExpenseList from '../components/ExpenseList';
+import Header from '../components/Header';
 
 interface DashboardPageProps {
   currentUserId: string | null;

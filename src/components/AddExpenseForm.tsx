@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/components/AddExpenseForm.css';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import DatePicker from 'react-datepicker';
 import LoadingSpinner from './LoadingSpinner';
-import 'react-datepicker/dist/react-datepicker.css';
-import '../styles/components/AddExpenseForm.css';
 
 interface Category {
   id: string;
