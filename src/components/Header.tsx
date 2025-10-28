@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/components/Header.css';
 
 interface HeaderProps {
@@ -12,7 +13,9 @@ const Header: React.FC<HeaderProps> = ({ username, onLogout, userImageUrl }) => 
   return (
     <header className="header">
       <div className="logo-container">
-        <h1 className="app-name">Expensy</h1>
+        <Link to="/dashboard" className="app-logo-link">
+          <h1 className="app-name">Expensy</h1>
+        </Link>
       </div>
       <div className="user-profile">
         <div className="greeting-text">
