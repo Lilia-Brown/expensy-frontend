@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/components/AddExpenseForm.css';
+import DatePicker from 'react-datepicker';
 import LoadingSpinner from './LoadingSpinner';
+import 'react-datepicker/dist/react-datepicker.css';
+import '../styles/components/AddExpenseForm.css';
 
 interface Category {
   id: string;
@@ -36,7 +38,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
     amount: '',
     currency: 'USD',
     description: '',
-    date: new Date().toISOString().slice(0, 16),
+    date: new Date().toISOString().slice(0, 10),
     city: prefilledCity || '',
     notes: '',
     source: 'manual',
@@ -119,6 +121,14 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setFormData(prev => ({ ...prev, date: date.toISOString().slice(0, 10) }));
+    } else {
+      setFormData(prev => ({ ...prev, date: '' }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -164,7 +174,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
         amount: '',
         currency: 'USD',
         description: '',
-        date: new Date().toISOString().slice(0, 16),
+        date: new Date().toISOString().slice(0, 10),
         city: prefilledCity || (cities.length > 0 ? cities[0] : ''),
         notes: '',
         source: 'manual',
@@ -211,14 +221,15 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefille
           </div>
           <div className="form-group form-group-half">
             <label htmlFor="date" className="label">Date</label>
-            <input
-              type="datetime-local"
+            <DatePicker
               id="date"
               name="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
+              selected={formData.date ? new Date(formData.date) : null}
+              onChange={handleDateChange}
+              dateFormat="MM/dd/yyyy"
               className="input"
+              maxDate={new Date()}
+              required
             />
           </div>
         </div>
