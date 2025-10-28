@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/pages/ExpenseShowPage.css';
+import '../../styles/pages/Expenses/ExpenseShowPage.css';
 
 interface Category {
   id: string;

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import '../styles/pages/ExpensePage.css';
+import '../../styles/pages/Expenses/ExpensePage.css';
 
+import Header from '../../components/Header';
 import ExpenseShowPage from './ExpenseShowPage';
-import Header from '../components/Header';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 interface Category {
   id: string;
@@ -85,7 +84,9 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
 
       <main className="main-content">
         {loading ? (
-          <LoadingSpinner />
+          <div className="loading-spinner-container">
+            <div className="loading-spinner"></div>
+          </div>
         ) : error ? (
           <div className="error-message">Error: {error}</div>
         ) : !expense ? (

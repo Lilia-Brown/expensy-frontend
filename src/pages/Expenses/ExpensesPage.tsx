@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ExpenseList from '../components/ExpenseList';
-import Header from '../components/Header';
+import ExpenseList from '../../components/ExpenseList';
+import Header from '../../components/Header';
 
 
 interface ExpensesPageProps {

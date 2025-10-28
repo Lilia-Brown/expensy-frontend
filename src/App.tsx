@@ -3,10 +3,10 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, Outlet } from 'react-router-dom';
 
 import AuthForm from './components/AuthForm';
-import AddExpensePage from './pages/AddExpensePage';
-import ExpensesPage from './pages/ExpensesPage.tsx';
+import AddExpensePage from './pages/Expenses/AddExpensePage.tsx';
 import DashboardPage from './pages/DashboardPage.tsx';
-import ExpensePage from './pages/ExpensePage';
+import ExpensePage from './pages/Expenses/ExpensePage.tsx';
+import ExpensesPage from './pages/Expenses/ExpensesPage.tsx';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
