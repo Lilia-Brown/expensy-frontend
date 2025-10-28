@@ -8,6 +8,11 @@ interface Category {
   name: string;
 }
 
+interface Budget {
+  id: string;
+  city: string;
+}
+
 interface ExpenseFormData {
   amount: string;
   currency: string;
@@ -21,23 +26,25 @@ interface ExpenseFormData {
 
 interface AddExpenseFormProps {
   currentUserId: string | null;
+  prefilledCity?: string;
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
+const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId, prefilledCity }) => {
   const [formData, setFormData] = useState<ExpenseFormData>({
     amount: '',
     currency: 'USD',
     description: '',
     date: new Date().toISOString().slice(0, 16),
-    city: '',
+    city: prefilledCity || '',
     notes: '',
     source: 'manual',
     categoryId: '',
   });
 
   const [categories, setCategories] = useState<Category[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -79,7 +86,33 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
     };
 
     fetchCategories();
-  }, []);
+
+    const fetchCities = async () => {
+      try {
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) { return; }
+
+        const response = await fetch(`${API_BASE_URL}/budgets`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+          },
+        });
+
+        if (!response.ok) { return; }
+
+        const budgets: Budget[] = await response.json();
+        const uniqueCities = Array.from(new Set(budgets.map(b => b.city)));
+        setCities(uniqueCities);
+        if (uniqueCities.length > 0 && !prefilledCity) {
+          setFormData(prev => ({ ...prev, city: uniqueCities[0] }));
+        }
+      } catch (err: any) {
+        console.error('Error fetching cities for dropdown:', err);
+      }
+    };
+
+    fetchCities();
+  }, [prefilledCity]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -132,7 +165,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
         currency: 'USD',
         description: '',
         date: new Date().toISOString().slice(0, 16),
-        city: '',
+        city: prefilledCity || (cities.length > 0 ? cities[0] : ''),
         notes: '',
         source: 'manual',
         categoryId: categories.length > 0 ? categories[0].id : '',
@@ -206,15 +239,25 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ currentUserId }) => {
         <div className="form-row">
           <div className="form-group form-group-half">
             <label htmlFor="city" className="label">City</label>
-            <input
-              type="text"
+            <select
               id="city"
               name="city"
               value={formData.city}
               onChange={handleChange}
               required
-              className="input"
-            />
+              className="select"
+              disabled={loading}
+            >
+              {cities.length === 0 ? (
+                <option value="">No cities found</option>
+              ) : (
+                cities.map(city => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))
+              )}
+            </select>
           </div>
           <div className="form-group form-group-half">
             <label htmlFor="categoryId" className="label">Category</label>
