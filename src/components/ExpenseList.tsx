@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/ExpenseList.css';
 
+import AddExpenseButton from './AddExpenseButton';
 interface Category {
   id: string;
   name: string;
@@ -123,9 +124,14 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, 
     <div className="expense-list-container">
       <div className="expense-list-header">
         <h3>{isPreview ? 'Recent' : selectedCity} Expenses</h3>
-        <div className="sort-filter-section">
-          {/* TODO: Add sort and filtering */}
+        <div className="add-expense-button-container">
+          {!isPreview && (
+            <AddExpenseButton currentUserId={currentUserId} />
+          )}
         </div>
+      </div>
+      <div className="sort-filter-section">
+        {/* TODO: Add sort and filtering */}
       </div>
 
       {expenses.length === 0 ? (
@@ -156,6 +162,16 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, 
               </tr>
             ))}
           </tbody>
+          {!isPreview && expenses.length > 0 && (
+            <tfoot>
+              <tr className="expense-total-row">
+                <td colSpan={2}>Total Spent</td>
+                <td className="amount-cell">
+                  ${expenses.reduce((acc, expense) => acc + expense.amount, 0).toFixed(2)}
+                </td>
+              </tr>
+            </tfoot>
+          )}
         </table>
       )}
       {isPreview && expenses.length > 0 && (

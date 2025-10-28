@@ -78,6 +78,7 @@ const CityExpensesPage: React.FC<CityExpensesPageProps> = ({ currentUserId, onLo
         <ExpenseList
           currentUserId={currentUserId}
           selectedCity={city || ''}
+          isPreview={false}
         />
       </main>
     </div>
