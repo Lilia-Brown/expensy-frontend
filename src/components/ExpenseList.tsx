@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/components/ExpenseList.css';
 
 import AddExpenseButton from './AddExpenseButton';
@@ -44,6 +44,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, 
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -146,8 +147,15 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ currentUserId, selectedCity, 
             </tr>
           </thead>
           <tbody>
-            {expenses.map((expense) => (
-              <tr key={expense.id} className="expense-table-row">
+            {expenses.map(expense => (
+              <tr
+                key={expense.id}
+                className="expense-table-row"
+                onClick={() => navigate(`/expenses/${expense.id}`)}
+                style={{ cursor: 'pointer' }}
+                tabIndex={0}
+                aria-label={`View expense: ${expense.description || 'No Description'}`}
+              >
                 <td>{new Date(expense.date).toLocaleDateString()}</td>
                 <td>
                   <div className="description-cell">

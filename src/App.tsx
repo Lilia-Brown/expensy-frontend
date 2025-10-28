@@ -6,6 +6,7 @@ import AuthForm from './components/AuthForm';
 import AddExpensePage from './pages/AddExpensePage';
 import CityExpensesPage from './pages/CityExpensesPage';
 import DashboardPage from './pages/DashboardPage.tsx';
+import ExpensePage from './pages/ExpensePage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -50,6 +51,17 @@ function App() {
               <Navigate to="/dashboard" replace />
             ) : (
               <AuthForm onLoginSuccess={handleLoginSuccess} />
+            )
+          }
+        />
+
+        <Route
+          path="/expenses/:id"
+          element={
+            isAuthenticated ? (
+              <ExpensePage currentUserId={currentUserId} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/auth" replace />
             )
           }
         />
