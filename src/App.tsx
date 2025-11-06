@@ -7,6 +7,7 @@ import AddExpensePage from './pages/Expenses/AddExpensePage.tsx';
 import DashboardPage from './pages/DashboardPage.tsx';
 import ExpensePage from './pages/Expenses/ExpensePage.tsx';
 import ExpensesPage from './pages/Expenses/ExpensesPage.tsx';
+import BudgetsPage from './pages/Budgets/BudgetsPage.tsx';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -137,6 +138,17 @@ function App() {
             path="/city-expenses/:city"
             element={
               <ExpensesPage currentUserId={currentUserId} onLogout={handleLogout} username={username} userImageUrl={userImageUrl} />
+            }
+          />
+          <Route
+            path="/budgets"
+            element={
+              <BudgetsPage
+                currentUserId={currentUserId}
+                onLogout={handleLogout}
+                username={username}
+                userImageUrl={userImageUrl}
+              />
             }
           />
         </Route>
