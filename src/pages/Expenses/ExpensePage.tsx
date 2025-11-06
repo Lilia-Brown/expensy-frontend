@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import '../../styles/pages/Expenses/ExpensePage.css';
 
 import ExpenseEditPage from './ExpenseEditPage';
@@ -183,13 +183,20 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
         ) : !expense ? (
           <div className="no-expenses-message">Expense not found.</div>
         ) : (
-          <div className="expense-detail-card">
-            {isEditing ? (
-              <ExpenseEditPage expense={expense} onCancel={toggleEdit} onSave={handleSave} />
-            ) : (
-              <ExpenseShowPage expense={expense} loading={loading} onEdit={toggleEdit} onDelete={handleDelete}/>
-            )}
-          </div>
+          <>
+            <div className="back-link-container">
+              <Link to={`/city-expenses/${expense.city}`} className="back-link">
+                ← Back to Expenses
+              </Link>
+            </div>
+            <div className="expense-detail-card">
+              {isEditing ? (
+                <ExpenseEditPage expense={expense} onCancel={toggleEdit} onSave={handleSave} />
+              ) : (
+                <ExpenseShowPage expense={expense} loading={loading} onEdit={toggleEdit} onDelete={handleDelete}/>
+              )}
+            </div>
+          </>
         )}
       </main>
     </div>
