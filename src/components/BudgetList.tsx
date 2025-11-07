@@ -49,7 +49,8 @@ const BudgetList: React.FC<BudgetListProps> = ({ currentUserId }) => {
           throw new Error(errorData.error || 'Failed to fetch budgets.');
         }
 
-        const data: Budget[] = await response.json();
+        const responseData = await response.json();
+        const data: Budget[] = responseData.budgets || responseData;
        
         data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         setBudgets(data);
@@ -88,7 +89,7 @@ const BudgetList: React.FC<BudgetListProps> = ({ currentUserId }) => {
           </thead>
           <tbody>
             {budgets.map(budget => (
-              <tr key={budget.id} className="budget-table-row" onClick={() => navigate(`/city-expenses/${budget.city}`)}>
+              <tr key={budget.id} className="budget-table-row" onClick={() => navigate(`/budgets/${budget.id}`)}>
                 <td>{budget.startDate && budget.endDate ? `${new Date(budget.startDate).toLocaleDateString()} - ${new Date(budget.endDate).toLocaleDateString()}` : 'N/A'}</td>
                 <td>{budget.city}</td>
                 <td className="amount-cell">${budget.budgetAmount.toFixed(2)} {budget.currency}</td>

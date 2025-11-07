@@ -72,7 +72,6 @@ const ExpensePage: React.FC<ExpensePageProps> = ({ currentUserId, onLogout, user
           ...expenseData,
           categoryId: expenseData.category?.id || expenseData.categoryId,
         });
-        setExpense(expenseData);
       } catch (err: any) {
         console.error('Error fetching expense:', err.message);
         setError(err.message || 'Failed to load expense details.');
