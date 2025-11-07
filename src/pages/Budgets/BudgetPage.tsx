@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import '../../styles/pages/Budgets/BudgetPage.css';
 
-// import BudgetEditPage from './BudgetEditPage';
+import BudgetEditPage from './BudgetEditPage';
 import BudgetShowPage from './BudgetShowPage';
 import Header from '../../components/Header';
  
@@ -80,42 +80,42 @@ const BudgetPage: React.FC<BudgetPageProps> = ({ currentUserId, onLogout, userna
     }
   };
 
-  // const handleSave = async (updatedData: any) => {
-  //   setLoading(true);
-  //   setError(null);
+  const handleSave = async (updatedData: any) => {
+    setLoading(true);
+    setError(null);
 
-  //   const authToken = localStorage.getItem('authToken');
-  //   if (!authToken) {
-  //     setError('Authentication token not found. Please log in.');
-  //     setLoading(false);
-  //     return;
-  //   }
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setError('Authentication token not found. Please log in.');
+      setLoading(false);
+      return;
+    }
 
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/budgets/${id}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${authToken}`,
-  //       },
-  //       body: JSON.stringify(updatedData),
-  //     });
+    try {
+      const response = await fetch(`${API_BASE_URL}/budgets/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
 
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       throw new Error(errorData.error || 'Failed to update budget.');
-  //     }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update budget.');
+      }
 
-  //     const budgetData: Budget = await response.json();
-  //     setBudget(budgetData);
-  //     setIsEditing(false);
-  //   } catch (err: any) {
-  //     console.error('Error updating budget:', err.message);
-  //     setError(err.message || 'Failed to update budget.');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      const budgetData: Budget = await response.json();
+      setBudget(budgetData);
+      setIsEditing(false);
+    } catch (err: any) {
+      console.error('Error updating budget:', err.message);
+      setError(err.message || 'Failed to update budget.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this budget? This action cannot be undone.')) {
@@ -180,8 +180,7 @@ const BudgetPage: React.FC<BudgetPageProps> = ({ currentUserId, onLogout, userna
             </div>
             <div className="budget-detail-card">
               {isEditing ? (
-                // <BudgetEditPage budget={budget} onCancel={toggleEdit} onSave={handleSave} />
-                <h1>Editing Budget</h1>
+                <BudgetEditPage budget={budget} onCancel={toggleEdit} onSave={handleSave} />
               ) : (
                 <>
                   <BudgetShowPage budget={budget} loading={loading} onEdit={toggleEdit} onDelete={handleDelete}/>

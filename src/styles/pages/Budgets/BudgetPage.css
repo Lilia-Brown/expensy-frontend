@@ -9,3 +9,9 @@
 .budget-detail-card h1 {
   margin-top: 0;
 }
+
+.budget-detail-card .input {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #E5E7EB;
+}
